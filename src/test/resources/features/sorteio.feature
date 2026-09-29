@@ -48,18 +48,20 @@ Funcionalidade: Sorteio
       | Filmes | SUSPENSO   |
       | Series | DISPONIVEL |
       | Musica | EXCLUIDO   |
+      | Livros | DISPONIVEL |
     E os votos:
       | participante | temas  |
       | Ana          | Filmes |
     E a votacao esta "ENCERRADA"
     Quando o sorteio e realizado
-    Entao o tema sorteado deve ser "Series"
-    E os pesos devem ser:
+    Entao os pesos devem ser:
       | tema   | peso |
       | Series | 1.0  |
+      | Livros | 1.0  |
     E as chances devem ser:
       | tema   | chance |
-      | Series | 1.0    |
+      | Series | 0.5    |
+      | Livros | 0.5    |
 
   @RN19
   Esquema do Cenario: A escolha respeita a proporcao dos pesos
@@ -96,12 +98,39 @@ Funcionalidade: Sorteio
     Entao o sorteio deve falhar com a mensagem "No modo VOTO_UNICO cada participante só pode votar em um tema: Ana"
 
   @RN01 @RN41
-  Cenario: Sessao sem temas disponiveis nao pode ser sorteada
+  Esquema do Cenario: Sorteio bloqueado com menos de 2 temas disponiveis
     Dado uma sessao no modo "ALEATORIO_PURO" com os temas:
-      | nome   | status   |
-      | Filmes | SUSPENSO |
+      | nome   | status    |
+      | Filmes | <filmes>  |
+      | Series | <series>  |
+      | Musica | <musica>  |
     Quando o sorteio e realizado
-    Entao o sorteio deve falhar com a mensagem "Não há temas disponíveis para sortear"
+    Entao o sorteio deve falhar com a mensagem "São necessários no mínimo 2 temas disponíveis para sortear"
+
+    Exemplos:
+      | filmes     | series   | musica   |
+      | SUSPENSO   | EXCLUIDO | SUSPENSO |
+      | DISPONIVEL | SUSPENSO | EXCLUIDO |
+      | DISPONIVEL | EXCLUIDO | EXCLUIDO |
+
+  @RN01
+  Cenario: Sessao sem temas nao pode ser sorteada
+    Dado uma sessao no modo "ALEATORIO_PURO" sem temas
+    Quando o sorteio e realizado
+    Entao o sorteio deve falhar com a mensagem "São necessários no mínimo 2 temas disponíveis para sortear"
+
+  @RN01
+  Cenario: Sorteio permitido com exatamente 2 temas disponiveis
+    Dado uma sessao no modo "ALEATORIO_PURO" com os temas:
+      | nome   | status     |
+      | Filmes | DISPONIVEL |
+      | Series | DISPONIVEL |
+      | Musica | SUSPENSO   |
+    Quando o sorteio e realizado
+    Entao os pesos devem ser:
+      | tema   | peso |
+      | Filmes | 1.0  |
+      | Series | 1.0  |
 
   @RN19
   Cenario: A chance de cada tema e o peso dividido pela soma dos pesos

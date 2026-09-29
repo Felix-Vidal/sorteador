@@ -41,6 +41,12 @@ public class SorteioSteps {
         sessao = new Sessao(ModoSorteio.valueOf(modo), temas, List.of());
     }
 
+    @Dado("uma sessao no modo {string} sem temas")
+    public void uma_sessao_no_modo_sem_temas(String modo) {
+        sessao = new Sessao(ModoSorteio.valueOf(modo), List.of(), List.of());
+    }
+
+
     @E("os votos:")
     public void os_votos(DataTable tabela) {
         List<Voto> votos = tabela.asMaps().stream()

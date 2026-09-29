@@ -19,6 +19,7 @@ import java.util.random.RandomGenerator;
 
 @Service
 public class SorteioService {
+    private static final int MINIMO_TEMAS_DISPONIVEIS = 2;
 
     private final RandomGenerator random;
 
@@ -30,8 +31,8 @@ public class SorteioService {
         validar(sessao);
 
         List<Tema> disponiveis = disponiveis(sessao);
-        if (disponiveis.isEmpty()) {
-            throw new IllegalStateException("Não há temas disponíveis para sortear");
+        if (disponiveis.size() < MINIMO_TEMAS_DISPONIVEIS) {
+            throw new IllegalStateException("São necessários no mínimo 2 temas disponíveis para sortear");
         }
 
         Map<String, Double> pesos = calcularPesos(sessao, disponiveis);
