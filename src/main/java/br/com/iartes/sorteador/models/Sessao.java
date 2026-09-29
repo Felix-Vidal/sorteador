@@ -1,8 +1,9 @@
 package br.com.iartes.sorteador.models;
 
-import br.com.iartes.sorteador.models.enums.ModoSorteio;
-
 import java.util.List;
+
+import br.com.iartes.sorteador.models.enums.ModoSorteio;
+import br.com.iartes.sorteador.models.enums.StatusVotacao;
 
 public class Sessao {
 
@@ -10,6 +11,7 @@ public class Sessao {
     private List<Tema> temas;
     private List<Voto> votos;
     private double pesoBase = 1;
+    private StatusVotacao statusVotacao = StatusVotacao.NAO_ABERTA;
 
     public Sessao() {
     }
@@ -57,5 +59,13 @@ public class Sessao {
 
     public void setPesoBase(double pesoBase) {
         this.pesoBase = pesoBase;
+    }
+
+    public StatusVotacao getStatusVotacao() {
+        return statusVotacao;
+    }
+
+    public void setStatusVotacao(StatusVotacao statusVotacao) {
+        this.statusVotacao = statusVotacao;
     }
 }

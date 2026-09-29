@@ -6,13 +6,15 @@ public class Sorteio {
 
     private Tema temaSorteado;
     private Map<String, Double> pesos;
+    private Map<String, Double> probabilidades;
 
     public Sorteio() {
     }
 
-    public Sorteio(Tema temaSorteado, Map<String, Double> pesos) {
+    public Sorteio(Tema temaSorteado, Map<String, Double> pesos, Map<String, Double> probabilidades) {
         this.temaSorteado = temaSorteado;
         this.pesos = pesos;
+        this.probabilidades = probabilidades;
     }
 
     public Tema getTemaSorteado() {
@@ -29,5 +31,13 @@ public class Sorteio {
 
     public void setPesos(Map<String, Double> pesos) {
         this.pesos = pesos;
+    }
+
+    public Map<String, Double> getProbabilidades() {
+        return probabilidades;
+    }
+
+    public void setProbabilidades(Map<String, Double> probabilidades) {
+        this.probabilidades = probabilidades;
     }
 }

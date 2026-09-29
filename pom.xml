@@ -68,6 +68,25 @@
 
 	<build>
 		<plugins>
+			<!--
+				Garante que o build use o JDK ${java.version} para compilar e para rodar os testes,
+				independente do JAVA_HOME do terminal. O caminho do JDK fica em ~/.m2/toolchains.xml.
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-toolchains-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>select-jdk-toolchain</goal>
+						</goals>
+						<configuration>
+							<version>${java.version}</version>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

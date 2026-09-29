@@ -6,6 +6,7 @@ import br.com.iartes.sorteador.models.Tema;
 import br.com.iartes.sorteador.models.Voto;
 import br.com.iartes.sorteador.models.enums.ModoSorteio;
 import br.com.iartes.sorteador.models.enums.StatusTema;
+import br.com.iartes.sorteador.models.enums.StatusVotacao;
 import br.com.iartes.sorteador.services.SorteioService;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.pt.Dado;
@@ -21,6 +22,7 @@ import java.util.Map;
 import java.util.random.RandomGenerator;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 
 public class SorteioSteps {
 
@@ -46,6 +48,11 @@ public class SorteioSteps {
                         Arrays.stream(linha.get("temas").split(",")).map(String::trim).toList()))
                 .toList();
         sessao.setVotos(votos);
+    }
+
+    @E("a votacao esta {string}")
+    public void a_votacao_esta(String statusVotacao) {
+        sessao.setStatusVotacao(StatusVotacao.valueOf(statusVotacao));
     }
 
     @Quando("o sorteio e realizado")
@@ -82,6 +89,21 @@ public class SorteioSteps {
         assertThat(erro).isNull();
         assertThat(sorteio.getPesos()).containsExactlyEntriesOf(esperado);
         assertThat(esperado).containsKey(sorteio.getTemaSorteado().getNome());
+    }
+
+    @Entao("as chances devem ser:")
+    public void as_chances_devem_ser(DataTable tabela) {
+        assertThat(erro).isNull();
+
+        Map<String, Double> esperado = new LinkedHashMap<>();
+        tabela.asMaps().forEach(linha -> esperado.put(linha.get("tema"), Double.valueOf(linha.get("chance"))));
+
+        Map<String, Double> chances = sorteio.getProbabilidades();
+        assertThat(chances).containsOnlyKeys(esperado.keySet().toArray(String[]::new));
+        esperado.forEach((tema, chance) -> assertThat(chances.get(tema)).isCloseTo(chance, within(1e-9)));
+
+        double soma = chances.values().stream().mapToDouble(Double::doubleValue).sum();
+        assertThat(soma).isCloseTo(1.0, within(1e-9));
     }
 
     @Entao("o sorteio deve falhar com a mensagem {string}")
