@@ -30,6 +30,7 @@ public class PesosSteps {
     private Sessao sessao;
     private Sorteio sorteio;
 
+    // Cria a sessao com os temas da tabela.
     @Dado("uma sessao de pesos no modo {string} com os temas:")
     public void uma_sessao_de_pesos_no_modo_com_os_temas(String modo, DataTable tabela) {
         List<Tema> temas = tabela.asMaps().stream()
@@ -38,6 +39,7 @@ public class PesosSteps {
         sessao = new Sessao(ModoSorteio.valueOf(modo), temas, List.of());
     }
 
+    // Registra os votos (uma linha = voto de um participante).
     @E("os votos de pesos:")
     public void os_votos_de_pesos(DataTable tabela) {
         List<Voto> votos = tabela.asMaps().stream()
@@ -47,16 +49,19 @@ public class PesosSteps {
         sessao.setVotos(votos);
     }
 
+    // Encerra a votacao (pre-requisito para sortear).
     @E("a votacao de pesos encerrada")
     public void a_votacao_de_pesos_encerrada() {
         sessao.setStatusVotacao(StatusVotacao.ENCERRADA);
     }
 
+    // Executa o sorteio (chama o codigo real do sistema).
     @Quando("o sorteio de pesos e realizado")
     public void o_sorteio_de_pesos_e_realizado() {
         sorteio = sorteioService.sortear(sessao);
     }
 
+    // Verifica se os pesos calculados batem com os esperados.
     @Entao("o peso de pesos de cada tema deve ser:")
     public void o_peso_de_pesos_de_cada_tema_deve_ser(DataTable tabela) {
         Map<String, Double> esperado = new LinkedHashMap<>();
