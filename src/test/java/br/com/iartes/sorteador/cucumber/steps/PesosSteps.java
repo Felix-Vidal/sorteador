@@ -38,8 +38,8 @@ public class PesosSteps {
         sessao = new Sessao(ModoSorteio.valueOf(modo), temas, List.of());
     }
 
-    @E("as cedulas de pesos:")
-    public void as_cedulas_de_pesos(DataTable tabela) {
+    @E("os votos de pesos:")
+    public void os_votos_de_pesos(DataTable tabela) {
         List<Voto> votos = tabela.asMaps().stream()
                 .map(linha -> new Voto(linha.get("participante"),
                         Arrays.stream(linha.get("temas").split(",")).map(String::trim).toList()))

@@ -11,7 +11,7 @@ Funcionalidade: Calculo dos pesos do sorteio
       | Filmes | DISPONIVEL |
       | Series | DISPONIVEL |
       | Musica | DISPONIVEL |
-    E as cedulas de pesos:
+    E os votos de pesos:
       | participante | temas  |
       | Ana          | Filmes |
     E a votacao de pesos encerrada
@@ -28,7 +28,7 @@ Funcionalidade: Calculo dos pesos do sorteio
       | nome   | status     |
       | Filmes | DISPONIVEL |
       | Series | DISPONIVEL |
-    E as cedulas de pesos:
+    E os votos de pesos:
       | participante | temas  |
       | Ana          | Filmes |
       | Bruno        | Filmes |
@@ -47,7 +47,7 @@ Funcionalidade: Calculo dos pesos do sorteio
       | Filmes | SUSPENSO   |
       | Series | DISPONIVEL |
       | Musica | DISPONIVEL |
-    E as cedulas de pesos:
+    E os votos de pesos:
       | participante | temas  |
       | Ana          | Filmes |
       | Bruno        | Series |
