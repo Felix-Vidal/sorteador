@@ -12,13 +12,20 @@ public class Tema {
     }
 
     public Tema(String nome) {
-        this.nome = nome;
+        this.nome = validarNome(nome);
     }
 
     public Tema(String nome, StatusTema status, int rodadasRestantes) {
-        this.nome = nome;
+        this.nome = validarNome(nome);
         this.status = status;
         this.rodadasRestantes = rodadasRestantes;
+    }
+
+    private String validarNome(String nome) {
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("O nome do tema não pode ser vazio");
+        }
+        return nome;
     }
 
     public String getNome() {
@@ -26,7 +33,7 @@ public class Tema {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.nome = validarNome(nome);
     }
 
     public StatusTema getStatus() {
